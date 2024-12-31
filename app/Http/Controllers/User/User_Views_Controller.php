@@ -55,6 +55,55 @@ class User_Views_Controller extends Controller
     }
 
 
+    public function getAllLevelsProgress(Request $request)
+    {
+        $userId = $request->user()->id;
+
+        // جلب جميع المستويات المشحونة للمستخدم
+        $shippedLevels = DB::table('level__users')
+            ->where('user_id', $userId)
+            ->get();
+
+        $responseLevels = [];
+
+        foreach ($shippedLevels as $userLevel) {
+            // جلب الأقسام المشحونة في هذا المستوى
+            $sections = DB::table('videos')
+                ->select('section_name', DB::raw('COUNT(id) as total_videos'))
+                ->where('level_id', $userLevel->level_id)
+                ->groupBy('section_name')
+                ->get();
+
+            $responseSections = [];
+            foreach ($sections as $section) {
+                // حساب عدد الفيديوهات التي شاهدها المستخدم في القسم
+                $viewedVideosCount = DB::table('user_video_views')
+                    ->where('user_id', $userId)
+                    ->where('section_name', $section->section_name)  // هنا نستخدم اسم القسم
+                    ->count();
+
+                // حساب نسبة التقدم في القسم
+                $progress = $section->total_videos > 0
+                    ? round(($viewedVideosCount / $section->total_videos) * 100, 2)
+                    : 0;
+
+                $responseSections[] = [
+                    'section_name' => $section->section_name,
+                    'progress' => "{$progress}%",
+                ];
+            }
+
+            $responseLevels[] = [
+                'level_id' => $userLevel->level_id,
+                'sections' => $responseSections,
+            ];
+        }
+
+        return response()->json([
+            'levels' => $responseLevels,
+        ]);
+    }
+
 
 //     public function getAllLevelsProgress(Request $request)
 // {
@@ -107,57 +156,6 @@ class User_Views_Controller extends Controller
 //         'levels' => $responseLevels,
 //     ]);
 // }
-
-
-public function getAllLevelsProgress(Request $request)
-{
-    $userId = $request->user()->id;
-
-    // جلب جميع المستويات المشحونة للمستخدم
-    $shippedLevels = DB::table('level__users')
-        ->where('user_id', $userId)
-        ->get();
-
-    $responseLevels = [];
-
-    foreach ($shippedLevels as $userLevel) {
-        // جلب الأقسام المشحونة في هذا المستوى
-        $sections = DB::table('videos')
-            ->select('section_name', DB::raw('COUNT(id) as total_videos'))
-            ->where('level_id', $userLevel->level_id)
-            ->groupBy('section_name')
-            ->get();
-
-        $responseSections = [];
-        foreach ($sections as $section) {
-            // حساب عدد الفيديوهات التي شاهدها المستخدم في القسم
-            $viewedVideosCount = DB::table('user_video_views')
-                ->where('user_id', $userId)
-                ->where('section_name', $section->section_name)  // هنا نستخدم اسم القسم
-                ->count();
-
-            // حساب نسبة التقدم في القسم
-            $progress = $section->total_videos > 0
-                ? round(($viewedVideosCount / $section->total_videos) * 100, 2)
-                : 0;
-
-            $responseSections[] = [
-                'section_name' => $section->section_name,
-                'progress' => "{$progress}%",
-            ];
-        }
-
-        $responseLevels[] = [
-            'level_id' => $userLevel->level_id,
-            'sections' => $responseSections,
-        ];
-    }
-
-    return response()->json([
-        'levels' => $responseLevels,
-    ]);
-}
-
 
 
 }

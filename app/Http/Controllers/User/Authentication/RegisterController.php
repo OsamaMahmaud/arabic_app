@@ -11,31 +11,20 @@ class RegisterController extends Controller
 {
 
     use ApiTrait;
-public function register(RegisterUser $request)
-{
-    // إنشاء المستخدم
-    $user = User::create($request->safe([
-       'fullname' => $request->fullname,
-        'email' => $request->phone,
-        'password' => bcrypt($request->password),
 
-    ]));
-    
-    $user->assignDefaultProfileImage();
-     
-   
-    // if ($request->hasFile('image')) {
-
-    // $user->addMediaFromRequest('image')
-    //    ->usingFileName($request->fullname . '_image.' . $request->file('image')->getClientOriginalExtension())
-    //    ->toMediaCollection('user_images'); // store new image         
-    // }
-    // $token = $user->createToken('auth_token')->plainTextToken;
-
-   
-    return $this->SuccessMessage('تم إنشاء الحساب بنجاح',200,new UserResource($user));
- 
-}
-
+    public function register(RegisterUser $request)
+    {
+        $user = User::create([
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+        
+        $user->assignDefaultProfileImage();
+        
+        // dd($user); // تحقق من البيانات المخزنة
+        
+        return $this->SuccessMessage('تم إنشاء الحساب بنجاح', 200, new UserResource($user));
+    }
 
 }

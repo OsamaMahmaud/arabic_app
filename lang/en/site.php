@@ -50,6 +50,16 @@ return [
 
     'permissions' => 'permissions',
 
+    'homepage'   =>'Home Page ',
+    'sliders' => 'Sliders',
+    'videos' => 'Video',
+    'title'=>'Title',
+
+    'levels'=>'Levels',
+    'lessons_count'=>'Lessons-Count',
+
+    'instructions'=>'Instructions',
+
     'categories' => 'categories',
     'all_categories' => 'all_categories',
     'name' => 'name',

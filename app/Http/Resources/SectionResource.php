@@ -15,7 +15,11 @@ class SectionResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'title' => $this->section_name,
+            'videos_count'=>$this->videos_count,
+            'section_image'=>$this->section_image,
+
         ];
     }
 }

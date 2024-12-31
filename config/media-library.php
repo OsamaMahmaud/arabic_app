@@ -1,19 +1,25 @@
 <?php
 
+use App\Services\CustomMediaPathGenerator;
+
+
 return [
 
     /*
      * The disk on which to store added files and derived images by default. Choose
      * one or more of the disks you've configured in config/filesystems.php.
      */
-    'disk_name' => 'media',
+    'disk_name' => env('MEDIA_DISK', 'media'),
     // 'disk_name' => env('MEDIA_DISK', 'media'),
 
     /*
      * The maximum file size of an item in bytes.
      * Adding a larger file will result in an exception.
      */
-    'max_file_size' => 1024 * 1024 * 10, // 10MB
+    // 'max_file_size' => 1024 * 1024 * 10, // 10MB
+    'max_file_size' => 1024 * 1024 * 50, // 10MB
+    
+
 
     /*
      * This queue connection will be used to generate derived and responsive images.
@@ -77,7 +83,7 @@ return [
     /*
      * The class that contains the strategy for determining a media file's path.
      */
-    'path_generator' => Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator::class,
+    'path_generator' => CustomMediaPathGenerator::class,
 
     /*
      * The class that contains the strategy for determining how to remove files.

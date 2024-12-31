@@ -16,11 +16,10 @@ class InstructionController extends Controller
         try{
 
             $instructions = Instruction::all();
-            if (empty($$instructions )) {
+            if (empty($instructions )) {
                return $this->ErrorMessage('لا يوجد تعليمات الان');
             }
             return  $this->SuccessMessage('instructions retrieved successfully',200,$instructions);
-
         }
         catch (\Exception $e) {
             // أي خطأ آخر

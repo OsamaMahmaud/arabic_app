@@ -30,9 +30,4 @@ class Level extends Model
         return $this->belongsToMany(Package::class, 'package__levels','level_id','package_id');
     }
 
-  
-
-       
-
-
 }

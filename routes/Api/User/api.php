@@ -40,6 +40,8 @@ use App\Http\Controllers\User\Profile\ContactMessageController;
       Route::get('/profile', [UserProfileController::class, 'show']);
 
       Route::post('/user/profile', [UserProfileController::class, 'updateProfile']);
+
+      Route::get('/user/profile/show', [UserProfileController::class, 'show']);
      
       Route::post('/user/change-photo', [UserProfileController::class, 'changePhoto'])->middleware('auth:sanctum');
 
@@ -92,3 +94,7 @@ use App\Http\Controllers\User\Profile\ContactMessageController;
   Route::get('intro-video', [HomeController::class, 'getIntroVideo']);
 
  #----------------------------End homePage --------------------------------------------------------------------------##
+ 
+
+ 
+ 

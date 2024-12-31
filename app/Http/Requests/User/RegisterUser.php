@@ -22,8 +22,8 @@ class RegisterUser extends FormRequest
     public function rules(): array
     {
         return [
-            'fullname' => 'required|string',
-            'email' => 'required|email|unique:users',
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'password_confirmation' => 'required|string|same:password',
             
@@ -31,4 +31,11 @@ class RegisterUser extends FormRequest
 
         
     }
+
+//     public function messages()
+// {
+//     return [
+//         'email.unique' => 'البريد الإلكتروني مسجل بالفعل. من فضلك اختر بريدًا إلكترونيًا آخر.',
+//     ];
+// }
 }

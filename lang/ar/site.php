@@ -48,7 +48,16 @@ return [
     'action' => 'اكشن',
 
     'permissions' => 'الصلاحيات',
+     
 
+    'homepage'   =>'الصفحه الرئيسيه',
+    'sliders' => 'السلايدر',
+    'videos' => 'الفيديوهات',
+    'title'=>'العنوان',
+
+    'levels'=>'المستويات',
+    'lessons_count'=>'عدد الدروس',
+    'instructions'=>'التعليمات',
     'categories' => 'الاقسام',
     'all_categories' => 'كل الاقسام',
     'name' => 'الاسم',

@@ -44,12 +44,12 @@ return [
             'throw' => false,
         ],
         
-        'media' => [
-                'driver' => 'local',
-                'root' => public_path('media'),  // مجلد media
-                'url' => env('APP_URL').'/media',
-                
-            ],
+            'media' => [
+            'driver' => 'local',
+            'root'   => public_path('media'), // تأكد من أن هذا هو المسار الصحيح
+            'url'    => env('APP_URL').'/media',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

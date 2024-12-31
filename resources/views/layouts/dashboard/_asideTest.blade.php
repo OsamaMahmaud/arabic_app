@@ -20,72 +20,93 @@
              {{-- categories --}}
             {{-- @if (auth()->user()->hasPermission('read_categories')) --}}
 
-            {{-- <li><a href="{{ route('dashboard.categories.index') }}"><i class="fa fa-th"></i><span>@lang('site.categories')</span></a></li> --}}
+            {{-- <li><a href="{{ route('dashboard.homepage.index') }}"><i class="fa fa-th"></i><span>@lang('site.homepage')</span></a></li> --}}
 
             {{-- @endif --}}
 
-            
+          {{-- homepage with submenu --}}
+          <li class="treeview">
+            <a href="#">
+                <i class="fa fa-home"></i> <span>@lang('site.homepage')</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                {{-- Slider Section --}}
+                <li>
+                    <a href="{{ route('dashboard.homepage.index') }}">
+                        <i class="fa fa-sliders"></i> @lang('site.sliders')
+                    </a>
+                </li>
+                {{-- Videos Section --}}
+                <li>
+                    <a href="{{ route('dashboard.videohome.index') }}">
+                        <i class="fa fa-video-camera"></i> @lang('site.videos')
+                    </a>
+                </li>
+            </ul>
+          </li>
+
+           {{-- levels with submenu --}}
+           <li class="treeview">
+            <a href="#">
+                <i class="fa fa-tasks"></i> <span>@lang('site.levels')</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                {{-- levels Section --}}
+                <li>
+                    <a href="{{ route('dashboard.levels.index') }}">
+                        <i class="fa fa-sliders"></i> @lang('site.levels')
+                    </a>
+                </li>
+                
+            </ul>
+          </li>
 
 
+          {{-- Videos with submenu --}}
+          <li class="treeview">
+            <a href="#">
+                <i class="fa fa-video-camera"></i> <span>@lang('site.videos')</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                {{-- videos Section --}}
+                <li>
+                    <a href="{{ route('dashboard.videos.index') }}">
+                        <i class="fa fa-video-camera"></i> @lang('site.videos')
+                    </a>
+                </li>
+                
+            </ul>
+          </li>
 
+          <li class="treeview">
+            <a href="#">
+                <i class="fa fa-info-circle"></i> <span>@lang('site.instructions')</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                {{-- videos Section --}}
+                <li>
+                    <a href="{{ route('dashboard.instructions.index') }}">
+                        <i class="fa fa-info-circle"></i> @lang('site.instructions')
+                    </a>
+                </li>
+                
+            </ul>
+          </li>
 
+    </ul>
 
-
-
-
-
-
-            {{-- @if (auth()->user()->hasPermission('read_categories'))
-                <li><a href="{{ route('dashboard.categories.index') }}"><i class="fa fa-th"></i><span>@lang('site.categories')</span></a></li>
-            @endif
-
-            @if (auth()->user()->hasPermission('read_products'))
-                <li><a href="{{ route('dashboard.products.index') }}"><i class="fa fa-th"></i><span>@lang('site.products')</span></a></li>
-            @endif
-
-            @if (auth()->user()->hasPermission('read_clients'))
-                <li><a href="{{ route('dashboard.clients.index') }}"><i class="fa fa-th"></i><span>@lang('site.clients')</span></a></li>
-            @endif
-
-            @if (auth()->user()->hasPermission('read_orders'))
-                <li><a href="{{ route('dashboard.orders.index') }}"><i class="fa fa-th"></i><span>@lang('site.orders')</span></a></li>
-            @endif
-
-            @if (auth()->user()->hasPermission('read_users'))
-                <li><a href="{{ route('dashboard.users.index') }}"><i class="fa fa-th"></i><span>@lang('site.users')</span></a></li>
-            @endif --}}
-
-            {{--<li><a href="{{ route('dashboard.categories.index') }}"><i class="fa fa-book"></i><span>@lang('site.categories')</span></a></li>--}}
-            {{----}}
-            {{----}}
-            {{--<li><a href="{{ route('dashboard.users.index') }}"><i class="fa fa-users"></i><span>@lang('site.users')</span></a></li>--}}
-
-            {{--<li class="treeview">--}}
-            {{--<a href="#">--}}
-            {{--<i class="fa fa-pie-chart"></i>--}}
-            {{--<span>الخرائط</span>--}}
-            {{--<span class="pull-right-container">--}}
-            {{--<i class="fa fa-angle-left pull-right"></i>--}}
-            {{--</span>--}}
-            {{--</a>--}}
-            {{--<ul class="treeview-menu">--}}
-            {{--<li>--}}
-            {{--<a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="../charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a>--}}
-            {{--</li>--}}
-            {{--</ul>--}}
-            {{--</li>--}}
-        </ul>
-
-    </section>
+</section>
 
 </aside>
-
