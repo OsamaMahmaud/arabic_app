@@ -37,9 +37,10 @@
 
                             <option style="text-align: center" >-------@lang('site.levels')-------</option>
 
+                           
                             @foreach ($levels as $level)
 
-                              <option value="{{ $level->id }}">{{ $level->name }}</option>
+                              <option value="{{ $level->id }}">{{ $level->name  }}</option>
 
                             @endforeach
                         </select>
@@ -55,7 +56,7 @@
 
                             <option style="text-align: center" >-------@lang('site.all_categories')-------</option>
 
-                            @foreach ($categories as $category)
+                            @foreach ($categories->unique('section_name') as $category)
 
                               <option value="{{ $category->section_name }}">{{ $category->section_name }}</option>
 

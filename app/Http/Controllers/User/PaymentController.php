@@ -35,13 +35,15 @@ class PaymentController extends Controller
         $package = Package::findOrFail($request->package_id);
 
         // التحقق من أن المبلغ المرسل يساوي مبلغ الباقة
-        if ($request->amount != $package->price) {
+        if ($request->amount['value'] != $package->price) {
             return response()->json(['error' => 'Invalid amount.'], 400);
         }
 
 
         $paymentData =  $this->paymentGateway->sendPayment($request);
 
+          // تسجيل الاستجابة لفحصها
+    \Log::info('Payment Data: ', $paymentData);
 
         if ($paymentData['success']) {
             // إنشاء سجل جديد للدفع مع حالة "قيد الانتظار"
@@ -55,7 +57,11 @@ class PaymentController extends Controller
             return response()->json(['url' => $paymentData['url']]);
         }
 
-       return response()->json(['error' => 'Payment initiation failed'], 500);
+    //    return response()->json(['error' => 'Payment initiation failed'], 500);
+    return response()->json([
+        'error' => 'Payment initiation failed',
+        'payment_data' => $paymentData
+    ], 500);
     }
 
 

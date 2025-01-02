@@ -15,36 +15,72 @@ class PaypalPaymentService extends BasePaymentService implements PaymentGatewayI
      */
     public function __construct()
     {
-        //test base_url
-        $this->base_url = env("PAYPAL_BASE_URL");
-        $this->client_id = env("PAYPAL_CLIENT_ID");
-        $this->client_secret = env("PAYPAL_CLIENT_SECRET");
+         // استخدام الإعدادات من ملف services.php
+        $this->base_url = config('services.paypal.base_url');
+        $this->client_id = config('services.paypal.client_id');
+        $this->client_secret = config('services.paypal.client_secret');
+                
+        // //test base_url
+        // $this->base_url = env("PAYPAL_BASE_URL");
+        // $this->client_id = env("PAYPAL_CLIENT_ID");
+        // $this->client_secret = env("PAYPAL_CLIENT_SECRET");
         $this->header=[
             "Accept" => "application/json",
             'Content-Type'=>"application/json",
             'Authorization'=> "Basic " . base64_encode("$this->client_id:$this->client_secret"),
         ];
+        // \Log::info('PayPal Config', [
+        //     'base_url' => $this->base_url,
+        //     'client_id' => $this->client_id,
+        //     'client_secret' => $this->client_secret,
+        // ]);
     }
     
+    // public function sendPayment(Request $request): array
+    // {
+    //     $data=$this->formatData($request);
+    //     $response = $this->buildRequest("POST", "/v2/checkout/orders", $data);
+    //     //handel payment response data and return it
+    //     \Log::info('PayPal Response', ['response' => $response->getData(true)]);
+
+    //     if ($response->getData(true)['success']) {
+    //         $transactionId = $response->getData(true)['data']['id']; // الحصول على transaction_id
+    
+    //         return [
+    //             'success' => true,
+    //             'url' => $response->getData(true)['data']['links'][1]['href'],
+    //             'transaction_id' => $transactionId, // إرجاع transaction_id
+    //         ];
+    //     }
+    //     return ['success' => false,'url'=>route('payment.failed')];
+
+    // }
+
+   
     public function sendPayment(Request $request): array
     {
-        $data=$this->formatData($request);
-        $response = $this->buildRequest("POST", "/v2/checkout/orders", $data);
-        //handel payment response data and return it
-
-        if ($response->getData(true)['success']) {
-            $transactionId = $response->getData(true)['data']['id']; // الحصول على transaction_id
+        $data = $this->formatData($request);
+    
+        // تسجيل البيانات المرسلة
+        \Log::info('PayPal Request Data', ['data' => $data]);
+    
+        $response = $this->buildRequest("POST", "/v2/checkout/orders",$data);
+    
+        // تسجيل الاستجابة
+        \Log::info('PayPal Full Response', ['response' => $response->getData(true)]);
+    
+        if ($response->getData(true)['success'] ?? false) {
+            $transactionId = $response->getData(true)['data']['id'];
     
             return [
                 'success' => true,
                 'url' => $response->getData(true)['data']['links'][1]['href'],
-                'transaction_id' => $transactionId, // إرجاع transaction_id
+                'transaction_id' => $transactionId,
             ];
         }
-        return ['success' => false,'url'=>route('payment.failed')];
-
+    
+        return ['success' => false, 'url' => route('payment.failed')];
     }
-
     public function callBack(Request $request):bool
     {
 
