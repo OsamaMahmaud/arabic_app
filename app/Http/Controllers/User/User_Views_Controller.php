@@ -95,11 +95,13 @@ class User_Views_Controller extends Controller
                     'section_name' => $section->section_name,
                     'level_name' => $levelName,
                     'progress' => "{$progress}%",
+                    'viewed_videos' => $viewedVideosCount,
+                     
                 ];
             }
 
             $responseLevels[] = [
-                'level_id' => $userLevel->level_id,
+                // 'level_id' => $userLevel->level_id,
                 'sections' => $responseSections,
             ];
         }
