@@ -87,8 +87,13 @@ class User_Views_Controller extends Controller
                     ? round(($viewedVideosCount / $section->total_videos) * 100, 2)
                     : 0;
 
+                      // جلب اسم المستوى (level_name) من جدول الفيديوهات
+                $levelName = DB::table('user_video_views')
+                            ->value('level_name');  // جلب اسم المستوى باستخدام `value`
+
                 $responseSections[] = [
                     'section_name' => $section->section_name,
+                    'level_name' => $levelName,
                     'progress' => "{$progress}%",
                 ];
             }
