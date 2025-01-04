@@ -45,9 +45,9 @@
                         <label>@lang('site.categories')</label>
                         <select name="section_name" class="form-control">
                             <option style="text-align: center">-------@lang('site.all_categories')-------</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->section_name }}" {{ $video->section_name == $category->section_name ? 'selected' : '' }}>
-                                    {{ $category->section_name }}
+                            @foreach ($enumValues as $category)
+                                <option value="{{ $category }}" {{ $video->section_name == $category? 'selected' : '' }}>
+                                    {{ $category }}
                                 </option>
                             @endforeach
                         </select>

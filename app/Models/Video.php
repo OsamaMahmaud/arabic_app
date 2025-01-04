@@ -12,7 +12,7 @@ class Video extends  Model implements HasMedia
 
     const PATH='videos';
 
-    protected $fillable = ['section_id', 'title', 'description', 'url','image','level_id'];
+    protected $fillable = ['section_name', 'title', 'description', 'url','image','level_id'];
 
     public function registerMediaCollections(): void
     {
@@ -30,5 +30,11 @@ class Video extends  Model implements HasMedia
     {
         return $this->belongsTo(Level::class);
     }
+
+    public function imageSection()
+    {
+        return $this->belongsTo(ImageSection::class, 'section_name', 'section_name');
+    }
+
     
 }

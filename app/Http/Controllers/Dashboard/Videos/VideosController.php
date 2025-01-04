@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Videos;
 use App\Models\Level;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class VideosController extends Controller
@@ -17,13 +18,23 @@ class VideosController extends Controller
         $levels = Level::get();
         $sections=Video::get('section_name');
 
+        $enumValues = DB::select("SHOW COLUMNS FROM videos WHERE Field = 'section_name'");
+        $enumValues = $enumValues[0]->Type;
+        $enumValues = substr($enumValues, 5, -1); // إزالة "enum(" و ")"
+        $enumValues = explode("','", $enumValues); // تقسيم القيم إلى مصفوفة
+        
+        // إزالة الاقتباسات المفردة باستخدام array_map
+        $enumValues = array_map(function($value) {
+            return trim($value, "'");
+        }, $enumValues);
+        
         $contants=Video::when( $request->section_name,function($q)use($request)
         {
             $q->where('section_name',$request->section_name);
         })->when($request->level,function($q)use($request){
             $q->where('level_id',$request->level);
         })->paginate(5);
-        return view('dashboard.videos.index',compact('contants','sections','levels'));
+        return view('dashboard.videos.index',compact('contants','sections','levels','enumValues'));
     }
 
     /**
@@ -34,8 +45,19 @@ class VideosController extends Controller
         $levels=Level::get();
 
         $categories=Video::get('section_name');
+
+        $enumValues = DB::select("SHOW COLUMNS FROM videos WHERE Field = 'section_name'");
+        $enumValues = $enumValues[0]->Type;
+        $enumValues = substr($enumValues, 5, -1); // إزالة "enum(" و ")"
+        $enumValues = explode("','", $enumValues); // تقسيم القيم إلى مصفوفة
         
-        return view('dashboard.videos.create',compact('levels','categories'));
+        // إزالة الاقتباسات المفردة باستخدام array_map
+        $enumValues = array_map(function($value) {
+            return trim($value, "'");
+        }, $enumValues);
+        
+        
+        return view('dashboard.videos.create',compact('levels','categories','enumValues'));
     }
 
     /**
@@ -98,11 +120,21 @@ class VideosController extends Controller
      */
     public function edit(string $id)
     {
+
+        $enumValues = DB::select("SHOW COLUMNS FROM videos WHERE Field = 'section_name'");
+        $enumValues = $enumValues[0]->Type;
+        $enumValues = substr($enumValues, 5, -1); // إزالة "enum(" و ")"
+        $enumValues = explode("','", $enumValues); // تقسيم القيم إلى مصفوفة
+        
+        // إزالة الاقتباسات المفردة باستخدام array_map
+        $enumValues = array_map(function($value) {
+            return trim($value, "'");
+        }, $enumValues);
         
         $video = Video::find($id);
         $levels = Level::all();
         $categories=Video::get('section_name');
-        return view('dashboard.videos.edit', compact('video', 'levels', 'categories'));
+        return view('dashboard.videos.edit', compact('video', 'levels', 'categories','enumValues'));
     }
 
     /**
@@ -110,6 +142,7 @@ class VideosController extends Controller
      */
     public function update(Request $request, Video $video)
     {
+        // return $request->all();
         // إزالة العلامات من الوصف
         $description = strip_tags($request->description);
     
@@ -117,7 +150,7 @@ class VideosController extends Controller
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
-            'section_name' => 'required|string',
+            'section_name' => 'required|string|in:التعلم من الحوار,التعلم من القراءه والكتابة,التعلم من الصور,الاكاديمية,تصريف الأفعال',
             'level_id' => 'required|integer',
             'url' => 'nullable|mimes:mp4,webm,ogg,avi,mov|max:20480',
             'image' => 'nullable|mimes:jpg,jpeg,png|max:2048',
@@ -130,6 +163,8 @@ class VideosController extends Controller
             'section_name' => $request->section_name,
             'level_id' => $request->level_id,
         ]);
+
+        // return $video;
     
         // تحديث الصورة إذا تم إرسالها
         if ($request->hasFile('image')) {

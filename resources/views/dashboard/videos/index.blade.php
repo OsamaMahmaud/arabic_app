@@ -38,8 +38,8 @@
                         <div class="col-md-4">
                             <select name="section_name" class="form-control">
                                 <option value="">---@lang('site.all_categories')-----</option>
-                                @foreach ($sections->unique('section_name') as $section)
-                                   <option value='{{ $section->section_name }}'>{{ $section->section_name }}</option>
+                                @foreach ($enumValues as $section)
+                                   <option value='{{ $section }}'>{{ $section }}</option>
                                 @endforeach
 
                             </select>

@@ -56,9 +56,9 @@
 
                             <option style="text-align: center" >-------@lang('site.all_categories')-------</option>
 
-                            @foreach ($categories->unique('section_name') as $category)
+                            @foreach ($enumValues as $category)
 
-                              <option value="{{ $category->section_name }}">{{ $category->section_name }}</option>
+                              <option value="{{ $category }}">{{ $category }}</option>
 
                             @endforeach
                         </select>
