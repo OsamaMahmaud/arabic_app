@@ -101,7 +101,7 @@ class User_Views_Controller extends Controller
             }
 
             $responseLevels[] = [
-                // 'level_id' => $userLevel->level_id,
+                'level_id' => $userLevel->level_id,
                 'sections' => $responseSections,
             ];
         }
