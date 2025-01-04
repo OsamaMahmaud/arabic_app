@@ -94,7 +94,7 @@ class User_Views_Controller extends Controller
                 $responseSections[] = [
                     'section_name' => $section->section_name,
                     'level_name' => $levelName,
-                    'progress' => "{$progress}%",
+                    'progress' =>(int) $progress ,
                     'viewed_videos' => $viewedVideosCount,
                      
                 ];
