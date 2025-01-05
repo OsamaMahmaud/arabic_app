@@ -63,11 +63,13 @@ class User_Views_Controller extends Controller
 
         // جلب جميع المستويات المشحونة للمستخدم
         $shippedLevels = DB::table('level__users')
-            ->where('user_id', $userId)
+            ->join('levels', 'level__users.level_id', '=', 'levels.id') // الانضمام للحصول على اسم المستوى
+            ->where('level__users.user_id', $userId)
+            ->select('levels.id as level_id', 'levels.name as level_name')
             ->get();
-
+    
         $responseLevels = [];
-
+    
         foreach ($shippedLevels as $userLevel) {
             // جلب الأقسام المشحونة في هذا المستوى
             $sections = DB::table('videos')
@@ -75,7 +77,7 @@ class User_Views_Controller extends Controller
                 ->where('level_id', $userLevel->level_id)
                 ->groupBy('section_name')
                 ->get();
-
+    
             $responseSections = [];
             foreach ($sections as $section) {
                 // حساب عدد الفيديوهات التي شاهدها المستخدم في القسم
@@ -83,15 +85,16 @@ class User_Views_Controller extends Controller
                     ->where('user_id', $userId)
                     ->where('section_name', $section->section_name)
                     ->count();
-
+    
                 // حساب نسبة التقدم في القسم
                 $progress = $section->total_videos > 0
                     ? round(($viewedVideosCount / $section->total_videos) * 100, 2)
                     : 0;
-
+    
                 $responseSections[] = [
+                    'level_id' => $userLevel->level_id,
+                    'level_name' => $userLevel->level_name, // إضافة اسم المستوى
                     'section_name' => $section->section_name,
-                    'level_id' => $userLevel->level_id, // إضافة level_id في استجابة القسم
                     'progress' => (int) $progress,
                     'viewed_videos' => $viewedVideosCount,
                 ];
