@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Traits\ApiTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class User_Views_Controller extends Controller
 {
+    use ApiTrait;
    
     public function markVideoAsViewed(Request $request)
    {
@@ -79,7 +81,7 @@ class User_Views_Controller extends Controller
                 // حساب عدد الفيديوهات التي شاهدها المستخدم في القسم
                 $viewedVideosCount = DB::table('user_video_views')
                     ->where('user_id', $userId)
-                    ->where('section_name', $section->section_name)  // هنا نستخدم اسم القسم
+                    ->where('section_name', $section->section_name)
                     ->count();
 
                 // حساب نسبة التقدم في القسم
@@ -87,29 +89,29 @@ class User_Views_Controller extends Controller
                     ? round(($viewedVideosCount / $section->total_videos) * 100, 2)
                     : 0;
 
-                      // جلب اسم المستوى (level_name) من جدول الفيديوهات
-                $levelName = DB::table('user_video_views')
-                            ->value('level_name');  // جلب اسم المستوى باستخدام `value`
-
                 $responseSections[] = [
                     'section_name' => $section->section_name,
-                    'level_name' => $levelName,
-                    'progress' =>(int) $progress ,
+                    'level_id' => $userLevel->level_id, // إضافة level_id في استجابة القسم
+                    'progress' => (int) $progress,
                     'viewed_videos' => $viewedVideosCount,
-                     
                 ];
             }
 
             $responseLevels[] = [
-                'level_id' => $userLevel->level_id,
+                // 'level_id' => $userLevel->level_id,
                 'sections' => $responseSections,
             ];
         }
 
-        return response()->json([
-            'levels' => $responseLevels,
-        ]);
+        // return response()->json([
+
+        //     'levels' => $responseLevels,
+        // ]);
+
+        return $this->SuccessMessage('data retrieved successfully',200, $responseLevels);
+
     }
+
 
 
 //     public function getAllLevelsProgress(Request $request)
