@@ -5,12 +5,14 @@ namespace App\Http\Controllers\User;
 use App\Models\User;
 use App\Models\Package;
 use App\Models\Payment;
+use App\Traits\ApiTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Interfaces\PaymentGatewayInterface;
 
 class PaymentController extends Controller
 {
+    use ApiTrait;
     protected PaymentGatewayInterface $paymentGateway;
 
     public function __construct(PaymentGatewayInterface $paymentGateway)
@@ -43,7 +45,7 @@ class PaymentController extends Controller
         $paymentData =  $this->paymentGateway->sendPayment($request);
 
           // تسجيل الاستجابة لفحصها
-    \Log::info('Payment Data: ', $paymentData);
+    // \Log::info('Payment Data: ', $paymentData);
 
         if ($paymentData['success']) {
             // إنشاء سجل جديد للدفع مع حالة "قيد الانتظار"
@@ -54,7 +56,8 @@ class PaymentController extends Controller
                 'transaction_id' => $paymentData['transaction_id'], // تخزين transaction_id
             ]);
 
-            return response()->json(['url' => $paymentData['url']]);
+            // return response()->json(['url' => $paymentData['url']]);
+            return $this->SuccessMessage('data retrieved successfully',200,['url' => $paymentData['url']]);
         }
 
     //    return response()->json(['error' => 'Payment initiation failed'], 500);
