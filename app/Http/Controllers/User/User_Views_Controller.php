@@ -60,7 +60,7 @@ class User_Views_Controller extends Controller
     public function getAllLevelsProgress(Request $request)
     {
         $userId = $request->user()->id;
-
+    
         // جلب جميع المستويات المشحونة للمستخدم
         $shippedLevels = DB::table('level__users')
             ->join('levels', 'level__users.level_id', '=', 'levels.id') // الانضمام للحصول على اسم المستوى
@@ -79,6 +79,7 @@ class User_Views_Controller extends Controller
                 ->get();
     
             $responseSections = [];
+    
             foreach ($sections as $section) {
                 // حساب عدد الفيديوهات التي شاهدها المستخدم في القسم
                 $viewedVideosCount = DB::table('user_video_views')
@@ -93,26 +94,22 @@ class User_Views_Controller extends Controller
     
                 $responseSections= [
                     'level_id' => $userLevel->level_id,
-                    'level_name' => $userLevel->level_name, 
+                    'level_name' => $userLevel->level_name,
                     'section_name' => $section->section_name,
                     'progress' => (int) $progress,
                     'viewed_videos' => $viewedVideosCount,
                 ];
             }
-
-            $responseLevels[] = 
-             $responseSections
-            ;
+    
+            if (!empty($responseSections)) {
+                $responseLevels[] =  $responseSections;
+                
+            }
         }
-
-        // return response()->json([
-
-        //     'levels' => $responseLevels,
-        // ]);
-
-        return $this->SuccessMessage('data retrieved successfully',200, $responseLevels);
-
+    
+        return $this->SuccessMessage('data retrieved successfully', 200, $responseLevels);
     }
+    
 
 
 
