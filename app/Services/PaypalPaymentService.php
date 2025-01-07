@@ -62,12 +62,12 @@ class PaypalPaymentService extends BasePaymentService implements PaymentGatewayI
         $data = $this->formatData($request);
     
         // تسجيل البيانات المرسلة
-        \Log::info('PayPal Request Data', ['data' => $data]);
+        // \Log::info('PayPal Request Data', ['data' => $data]);
     
         $response = $this->buildRequest("POST", "/v2/checkout/orders",$data);
     
         // تسجيل الاستجابة
-        \Log::info('PayPal Full Response', ['response' => $response->getData(true)]);
+        // \Log::info('PayPal Full Response', ['response' => $response->getData(true)]);
     
         if ($response->getData(true)['success'] ?? false) {
             $transactionId = $response->getData(true)['data']['id'];

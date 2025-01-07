@@ -91,19 +91,18 @@ class User_Views_Controller extends Controller
                     ? round(($viewedVideosCount / $section->total_videos) * 100, 2)
                     : 0;
     
-                $responseSections[] = [
+                $responseSections= [
                     'level_id' => $userLevel->level_id,
-                    'level_name' => $userLevel->level_name, // إضافة اسم المستوى
+                    'level_name' => $userLevel->level_name, 
                     'section_name' => $section->section_name,
                     'progress' => (int) $progress,
                     'viewed_videos' => $viewedVideosCount,
                 ];
             }
 
-            $responseLevels[] = [
-                // 'level_id' => $userLevel->level_id,
-                'sections' => $responseSections,
-            ];
+            $responseLevels[] = 
+             $responseSections
+            ;
         }
 
         // return response()->json([

@@ -14,7 +14,8 @@ class AboutController extends Controller
     public function index(){
 
         $about=About::first();
+        $aboutList = $about ? $about->toArray() : [];
 
-        return $this->SuccessMessage('About-us retrieved successfully',200,$about);
+        return $this->SuccessMessage('About-us retrieved successfully', 200, $aboutList);
     }
 }
