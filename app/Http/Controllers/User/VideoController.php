@@ -34,7 +34,8 @@ class VideoController extends Controller
                               ->where('section_name', $type)
                               ->get(['id', 'title', 'description', 'image','url']);
 
-        return response()->json($videos);
+        return $this->SuccessMessage('content retrieved successfully',200,$videos);             
+        // return response()->json($videos);
     }
 }
 
