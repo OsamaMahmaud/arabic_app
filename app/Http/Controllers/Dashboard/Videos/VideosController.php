@@ -166,24 +166,18 @@ class VideosController extends Controller
 
         // return $video;
     
-        // تحديث الصورة إذا تم إرسالها
         if ($request->hasFile('image')) {
-            // حذف الصورة الحالية من مكتبة الوسائط
             $video->clearMediaCollection('video_image');
     
-            // رفع الصورة الجديدة
             $media = $video->addMediaFromRequest('image')
                 ->usingFileName($request->section_name . '_image.' . $request->file('image')->getClientOriginalExtension())
                 ->toMediaCollection('video_image');
     
-            // تخزين مسار الصورة في قاعدة البيانات
             $video->image = $media->getUrl();
             $video->save();
         }
     
-        // تحديث الفيديو إذا تم إرساله
         if ($request->hasFile('url')) {
-            // حذف الفيديو الحالي من مكتبة الوسائط
             $video->clearMediaCollection('video_url');
     
             // رفع الفيديو الجديد

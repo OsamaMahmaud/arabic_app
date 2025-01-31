@@ -54,6 +54,9 @@ return [
     'sliders' => 'السلايدر',
     'videos' => 'الفيديوهات',
     'title'=>'العنوان',
+    'packages'=>'الباقات',
+
+    'Profile'=>'البروفايل',
 
     'levels'=>'المستويات',
     'lessons_count'=>'عدد الدروس',

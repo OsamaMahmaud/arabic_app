@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\Dashboard\PakagesController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\HomePageController;
@@ -34,6 +35,22 @@ Route::middleware('auth')->prefix('dashdoard')->name('dashboard.')->group(functi
 Route::resource('instructions', InstructionController::class);
 
 #----------------------------End instructions -----------------------------------------------------------------------##
+
+
+#----------------------------Start instructions --------------------------------------------------------------------##
+Route::resource('pakages', PakagesController::class);
+
+#----------------------------End instructions -----------------------------------------------------------------------##
+
+
+
+#----------------------------Start user_profile ---------------------------------------------------------------------##
+Route::resource('about-us', PakagesController::class);
+Route::resource('contact', PakagesController::class);
+Route::resource('Term', PakagesController::class);
+Route::resource('Privacy', PakagesController::class);
+
+#----------------------------End user_profile -----------------------------------------------------------------------##
 
 
 

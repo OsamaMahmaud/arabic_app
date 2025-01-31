@@ -54,6 +54,10 @@ return [
     'sliders' => 'Sliders',
     'videos' => 'Video',
     'title'=>'Title',
+    'packages'=>'packages',
+     
+    'Profile'=>'Profile',
+    'about-us'=>'About-us',
 
     'levels'=>'Levels',
     'lessons_count'=>'Lessons-Count',

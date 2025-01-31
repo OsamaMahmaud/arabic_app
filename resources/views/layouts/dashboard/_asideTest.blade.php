@@ -105,6 +105,44 @@
             </ul>
           </li>
 
+           {{-- packages --}}
+          <li class="treeview">
+            <a href="#">
+                <i class="fa fa-cubes"></i> <span>@lang('site.packages')</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                {{-- packages --}}
+                <li>
+                    <a href="{{ route('dashboard.pakages.index') }}">
+                        <i class="fa fa-cubes"></i> @lang('site.packages')
+                    </a>
+                </li>
+                
+            </ul>
+          </li>
+
+          {{--User profile --}}
+          <li class="treeview">
+            <a href="#">
+                <i class="fa fa-user-circle"></i> <span>@lang('site.Profile')</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                {{-- about-us --}}
+                <li>
+                    <a href="{{ route('dashboard.about-us.index') }}">
+                        <i class="fas fa-user"></i> @lang('site.packages')
+                    </a>
+                </li>
+                
+            </ul>
+          </li>
+
     </ul>
 
 </section>
